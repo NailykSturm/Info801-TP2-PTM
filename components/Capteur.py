@@ -2,7 +2,7 @@ import random
 from multiprocessing import Process
 import paho.mqtt.client as mqtt
 
-broker_address = "localhost:1883"
+broker_address = "localhost"
 captors_topic = "captors_topic"
 
 actual_temperature = 40

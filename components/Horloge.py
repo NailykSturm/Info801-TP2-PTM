@@ -1,13 +1,12 @@
-import random
-from multiprocessing import Process
 import paho.mqtt.client as mqtt
+import time
 
 broker_address = "localhost"
 
 pause = "pause"
 skipTime = "skipTime"
 getTime = "getTime"
-getTime = "delta"
+delta = "delta"
 isPaused = False
 interval = 0.25
 timeCount = 0
@@ -18,7 +17,7 @@ def on_connect(_, _userdata, _flags, rc):
     print("Connected with result code " + str(rc))
 
 
-def on_message(_, _userdata, msg):
+def on_message(clientMsg, _userdata, msg):
     global isPaused, timeCount
     match msg.topic:
         case str(pause):
