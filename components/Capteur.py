@@ -3,9 +3,9 @@ from multiprocessing import Process
 import paho.mqtt.client as mqtt
 
 broker_address = "localhost"
-captors_topic = "captors_topic"
+captors_topic = "getTemperature"
 
-actual_temperature = 40
+actual_temperature = 20
 
 editTemp = "editTemp"
 
@@ -22,7 +22,8 @@ def captor_loop():
     def on_message(clientMsg, _userdata, msg):
         global actual_temperature
         if msg.topic == captors_topic:
-            clientMsg.publish("collectorChan", str(actual_temperature))
+            client.publish("collectorChan", str(actual_temperature))
+            client.publish("setTempVue", str(actual_temperature))
         elif msg.topic == editTemp:
             actual_temperature = int(msg.payload.decode())
 
@@ -31,5 +32,4 @@ def captor_loop():
     client.loop_forever()
 
 
-captor_process = Process(target=captor_loop)
-captor_process.start()
+captor_loop()

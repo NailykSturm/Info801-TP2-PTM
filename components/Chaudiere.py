@@ -22,6 +22,7 @@ def chaudiere_loop():
 
     def on_connect(_, _userdata, _flags, rc):
         print(f"Chaudiere connected with result code {str(rc)}")
+        client.publish("setChaudiereAllumeVue", allume)
 
     def on_message(clientMsg, _userdata, msg):
         global allume, willFailToStart, lastStart, cc, allumeToi2, lastFailStart
@@ -38,10 +39,12 @@ def chaudiere_loop():
                     if random.random() > 0.5: cc.publish("respondAllumeToi", "NOK")
                     return
                 allume = True
+                client.publish("setChaudiereAllumeVue", allume)
                 cc.publish("respondAllumeToi", "OK")
             case str(eteintToi):
                 allume = False
                 clientMsg.publish("respondEteintToi", "OK")
+                client.publish("setChaudiereAllumeVue", allume)
             case str(setFailure):
                 willFailToStart = not willFailToStart
             case default:
@@ -52,5 +55,4 @@ def chaudiere_loop():
     client.loop_forever()
 
 
-chaudiere_process = Process(target=chaudiere_loop)
-chaudiere_process.start()
+chaudiere_loop()

@@ -1,4 +1,5 @@
 import subprocess
+import os
 from multiprocessing import Process
 
 
@@ -16,3 +17,4 @@ if __name__ == '__main__':
 
     windows_proccess.join()
     for p in process: p.kill()
+    print("Tout est arrêté\nMerci d'être passé !")
