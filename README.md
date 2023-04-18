@@ -4,3 +4,6 @@
 Les architectures utilisées :
 - Composants - Connecteurs
 - Pipes & Filters 
+
+Pour cette applications, nous avons convenu de l'architecture suivante :
+![Schéma Architecture](./assets/SchemaStructure.png)
